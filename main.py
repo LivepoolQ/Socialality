@@ -1,7 +1,16 @@
+"""
+@Author: Ziqian Zou
+@Date: 2026-02-05 16:26:58
+@LastEditors: Ziqian Zou
+@LastEditTime: 2026-03-02 20:49:55
+@Description: file content
+@Github: https://github.com/LivepoolQ
+@Copyright 2026 Ziqian Zou, All Rights Reserved.
+"""
+
 import sys
 
 import qpid
-import ranger
 import socialality
 
 """
@@ -16,9 +25,8 @@ File structures:
     |___dataset_configs
     |___dataset_processed
     |___main.py
-    |___reverberation         
-    |___resonance             
-    |___socialCircle          
+    |___socialality
+    |___groups <- (optional)                 
     |___...
 """
 
