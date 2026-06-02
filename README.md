@@ -2,7 +2,7 @@
  * @Author: Ziqian Zou
  * @Date: 2026-03-02 20:02:50
  * @LastEditors: Ziqian Zou
- * @LastEditTime: 2026-03-03 10:20:07
+ * @LastEditTime: 2026-06-02 10:48:08
  * @Description: file content
  * @Github: https://github.com/LivepoolQ
  * Copyright 2026 Ziqian Zou, All Rights Reserved.
@@ -46,13 +46,14 @@ pip install -r requirements.txt
 > More details will be gradually uploaded soon.
 > Thank you for your support to our work.
 
+
+
 ## Contact us
 
 Ziqian Zou ([@LivepoolQ](https://github.com/LivepoolQ)): ziqianzoulive@icloud.com
 
 [GrouPConCeption](https://github.com/LivepoolQ/GrouPConCeption)
 <!-- DO NOT CHANGE THIS LINE -->
-
 ---
 
 ## Args Used
@@ -677,12 +678,32 @@ Controls whether to draw visualized results on the empty canvas instead of the a
 
 
 <details markdown="1">
-<summary markdown="span"><code>--Kc</code></summary>
+<summary markdown="span"><code>--current_only</code></summary>
 
-        .
+Choose whether to only use current step when grouping.
 
 - Type=`int`, argtype=`static`
-- The default value is `20`.
+- The default value is `0`.
+
+</details>
+
+<details markdown="1">
+<summary markdown="span"><code>--disable_distance_anchor</code> (short for <code>-disable_dis</code>)</summary>
+
+Choose whether to disable distance anchor.
+
+- Type=`int`, argtype=`static`
+- The default value is `0`.
+
+</details>
+
+<details markdown="1">
+<summary markdown="span"><code>--disable_speed_anchor</code> (short for <code>-disable_speed</code>)</summary>
+
+Choose whether to disable speed anchor.
+
+- Type=`int`, argtype=`static`
+- The default value is `0`.
 
 </details>
 
@@ -709,7 +730,7 @@ Ratio of ego loss when computing sum of l2 loss and ego loss.
 <details markdown="1">
 <summary markdown="span"><code>--ego_predictor_type</code></summary>
 
-Choose which kind of backbones ego predictor will use. - `linear`: - `fc`: - `tran`:
+Choose which kind of backbones ego predictor will use. - `linear`: Linearly fit the observed trajectory - `fc`: Fully connected layer - `tran`: Transformer.
 
 - Type=`str`, argtype=`dynamic`
 - The default value is `tran`.
@@ -777,19 +798,9 @@ Number of multi-style generation.
 </details>
 
 <details markdown="1">
-<summary markdown="span"><code>--group_distance</code></summary>
-
-(Working in process)
-
-- Type=`int`, argtype=`static`
-- The default value is `6`.
-
-</details>
-
-<details markdown="1">
 <summary markdown="span"><code>--group_type</code></summary>
 
-Choose which group method to use, including `[0, 1, 2]`: - `0`: Vanilla ; - `1`: TODO Model; - `2`: TODO.
+Choose which group method to use, including `[0, 1]`: - `0`: Original GPCC Model ; - `1`: Socialality Model.
 
 - Type=`int`, argtype=`static`
 - The default value is `1`.
@@ -857,22 +868,22 @@ Set distance anchor value globally.
 </details>
 
 <details markdown="1">
+<summary markdown="span"><code>--set_grouping_ratio</code></summary>
+
+Set grouping ratio value, which will randomly assign part of the neighbors as a group. NOTE This args can only be used as counterfactual anynasis.
+
+- Type=`float`, argtype=`temporary`
+- The default value is `-1.0`.
+
+</details>
+
+<details markdown="1">
 <summary markdown="span"><code>--set_speed_anchor</code> (short for <code>-set_speed</code>)</summary>
 
 Set distance anchor value globally.
 
 - Type=`int`, argtype=`static`
 - The default value is `-1`.
-
-</details>
-
-<details markdown="1">
-<summary markdown="span"><code>--use_group</code></summary>
-
-Choose whether to use pedestrian groups when calculating SocialCircle.
-
-- Type=`int`, argtype=`static`
-- The default value is `0`.
 
 </details>
 
@@ -926,6 +937,18 @@ NOTE that this arg only works in the *Playground* mode, or the program will be k
 Choose whether to visualize group members.
 
 NOTE that this arg only works in the *Playground* mode, or the program will be killed immediately.
+
+- Type=`int`, argtype=`temporary`
+- The default value is `0`.
+
+</details>
+
+<details markdown="1">
+<summary markdown="span"><code>--vis_grouping_window</code></summary>
+
+Choose whether to visualize grouping window.
+
+NOTE that this arg only works in the *Playground* mode, or the program will be killed immediately.  NOTE that this arg only works when the arg `vis_group_members` is activated. 
 
 - Type=`int`, argtype=`temporary`
 - The default value is `0`.
