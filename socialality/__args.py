@@ -2,7 +2,7 @@
 @Author: Ziqian Zou
 @Date: 2025-12-11 17:21:42
 @LastEditors: Ziqian Zou
-@LastEditTime: 2026-01-29 18:28:02
+@LastEditTime: 2026-06-02 10:05:25
 @Description: file content
 @Github: https://github.com/LivepoolQ
 @Copyright 2025 Ziqian Zou, All Rights Reserved.
@@ -13,24 +13,6 @@ from qpid.args import DYNAMIC, STATIC, TEMPORARY, EmptyArgs
 
 
 class SocialalityArgs(EmptyArgs):
-
-    @property
-    def Kc(self) -> int:
-        """
-
-        """
-        return self._arg('Kc', 20, argtype=STATIC)
-
-    @property
-    def use_group(self) -> int:
-        """
-        Choose whether to use pedestrian groups when calculating SocialCircle.
-        """
-        return self._arg('use_group', 0, argtype=STATIC, desc_in_model_summary='use kernel function')
-
-    @property
-    def group_distance(self) -> int:
-        return self._arg('group_distance', 6, argtype=STATIC)
 
     @property
     def output_units(self) -> int:
@@ -91,9 +73,9 @@ class SocialalityArgs(EmptyArgs):
     def ego_predictor_type(self) -> str:
         """
         Choose which kind of backbones ego predictor will use.
-        - `linear`:
-        - `fc`:
-        - `tran`:
+        - `linear`: Linearly fit the observed trajectory
+        - `fc`: Fully connected layer
+        - `tran`: Transformer
         """
         return self._arg('ego_predictor_type', 'tran', argtype=DYNAMIC,
                          desc_in_model_summary=('Ego predictor', 'type'))
@@ -118,9 +100,8 @@ class SocialalityArgs(EmptyArgs):
     def group_type(self) -> int:
         """
         Choose which group method to use, including `[0, 1, 2]`:
-        - `0`: Vanilla ;
-        - `1`: TODO Model;
-        - `2`: TODO.
+        - `0`: Original GPCC Model ;
+        - `1`: Socialality Model.
         """
         return self._arg('group_type', 1, argtype=STATIC, desc_in_model_summary='group type')
 
@@ -178,6 +159,20 @@ class SocialalityArgs(EmptyArgs):
         return self._arg('set_speed_anchor', -1, argtype=STATIC, short_name='set_speed')
     
     @property
+    def disable_distance_anchor(self) -> int:
+        """
+        Choose whether to disable distance anchor.
+        """
+        return self._arg('disable_distance_anchor', 0, argtype=STATIC, desc_in_model_summary='disable distance anchor', short_name='disable_dis')
+    
+    @property
+    def disable_speed_anchor(self) -> int:
+        """
+        Choose whether to disable speed anchor.
+        """
+        return self._arg('disable_speed_anchor', 0, argtype=STATIC, desc_in_model_summary='disable speed anchor', short_name='disable_speed')
+    
+    @property
     def previews_only(self) -> int:
         """
         Choose whether to only use previews when grouping.
@@ -185,6 +180,20 @@ class SocialalityArgs(EmptyArgs):
         """
         return self._arg('previews_only', 0, argtype=STATIC, desc_in_model_summary='only previews')
     
+    @property
+    def current_only(self) -> int:
+        """
+        Choose whether to only use current step when grouping.
+        """
+        return self._arg('current_only', 0, argtype=STATIC, desc_in_model_summary='only current')
+    
+    @property
+    def set_grouping_ratio(self) -> float:
+        """
+        Set grouping ratio value, which will randomly assign part of the neighbors as a group.
+        NOTE This args can only be used as counterfactual anynasis.
+        """
+        return self._arg('set_grouping_ratio', -1.0, argtype=TEMPORARY)    
     # --------------------------
     # MARK: - Visualization Args
     # --------------------------
@@ -213,6 +222,18 @@ class SocialalityArgs(EmptyArgs):
         will be killed immediately.
         """
         return self._arg('vis_group_members', 0, argtype=TEMPORARY)
+    
+    @property
+    def vis_grouping_window(self) -> int:
+        """
+        Choose whether to visualize grouping window.
+
+        NOTE that this arg only works in the *Playground* mode, or the program
+        will be killed immediately. 
+        NOTE that this arg only works when the arg `vis_group_members` is
+        activated. 
+        """
+        return self._arg('vis_grouping_window', 0, argtype=TEMPORARY)
     
     @property
     def vis_anchors(self) -> int:
