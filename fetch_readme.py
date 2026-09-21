@@ -2,7 +2,7 @@
 @Author: Conghao Wong
 @Date: 2024-12-04 09:44:45
 @LastEditors: Ziqian Zou
-@LastEditTime: 2026-09-21 17:34:38
+@LastEditTime: 2026-09-21 17:56:56
 @Github: https://cocoon2wong.github.io
 @Copyright 2024 Conghao Wong, All Rights Reserved.
 """
@@ -11,7 +11,7 @@ import requests
 import shutil
 
 GITHUB_USERNAME = 'LivepoolQ'
-GITHUB_REPONAME = 'Soocialality'
+GITHUB_REPONAME = 'Socialality'
 GITHUB_READMEFILE = 'README.md'
 
 SOURCE_FILE = './guidelines.md'
