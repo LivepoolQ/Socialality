@@ -8,7 +8,7 @@ cover-img: /subassets/img/head.jpg
  * @Author: Conghao Wong
  * @Date: 2024-12-27 11:05:08
  * @LastEditors: Ziqian Zou
- * @LastEditTime: 2026-09-21 18:13:47
+ * @LastEditTime: 2026-09-21 18:40:16
  * @Github: https://cocoon2wong.github.io
  * Copyright 2024 Conghao Wong, All Rights Reserved.
 -->
@@ -21,7 +21,7 @@ Click the buttons below for more information.
 
 <div style="text-align: center;">
     <!-- {% if site.arxiv-id %} -->
-    <a class="btn btn-lg btn-normal" href="./paper">📖 Paper</a>
+    <!-- <a class="btn btn-lg btn-normal" href="./paper">📖 Paper</a> -->
     <!-- {% endif %} -->
     <a class="btn btn-lg btn-normal" href="{{ site.github.repository_url }}">🛠️ Code</a>
     <a class="btn btn-lg btn-normal" href="./guidelines">💡 Code Guidelines</a>
@@ -51,5 +51,5 @@ TBA
 
 ## Contact us
 
-Conghao Wong ([@cocoon2wong](https://github.com/cocoon2wong)): conghaowong@icloud.com  
 Ziqian Zou ([@LivepoolQ](https://github.com/LivepoolQ)): ziqianzoulive@icloud.com  
+Conghao Wong ([@cocoon2wong](https://github.com/cocoon2wong)): conghaowong@icloud.com  
