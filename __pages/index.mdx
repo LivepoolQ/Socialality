@@ -1,0 +1,77 @@
+---
+layout: "@/layouts/BaseLayout.astro"
+title: "Socialaity"
+subtitle: "Socialality Anchors: Towards Group-bounded Trajectory Prediction"
+coverImg: "/assets/figs/head.jpg"
+footnotes: {[
+  "Socialality Anchors: Towards Group-bounded Trajectory Prediction.",
+  "All research materials and source codes are licensed under MIT.",
+]}
+showTableOfContents: false
+---
+
+import { withBase } from "@/utils/url";
+import LiquidGlassImageContainer from "@/components/LiquidGlassImageContainer.astro";
+import Pill from "@/components/Pill.astro";
+
+<h2>Information</h2>
+<p>
+  This is the homepage of our paper <strong>"Socialality Anchors: Towards Group-bounded Trajectory Prediction"</strong>.
+  The paper is now available on arXiv.
+  Click the buttons below for more information.
+</p>
+
+<Pill
+  hoverable
+  items={[
+    {label: "📖 Paper", href: withBase("/paper")},
+    {label: "🛠️ Code", href: "https://github.com/LivepoolQ/Socialality"},
+    {label: "💡 Code Guidelines", href: withBase("/guidelines")}
+  ]}
+/>
+
+
+<h2>Abstract</h2>
+
+<p>
+  Trajectory prediction is a key component for understanding human behavior patterns in dynamic scenes.
+  Researchers have devoted substantial efforts to modeling social interactions, especially group-wise interactions, since group membership often reflects shared intention, coordinated motion, and stable mutual adaptation, thus providing a persistent and semantically meaningful social prior for forecasting.
+  However, existing group modeling methods may rely on a fixed threshold and infer groups mainly from agents' relative positions within the observation window, overlooking the fact that grouping rules should be agent-specific, temporally coherent, and context-adaptive across diverse personalities, culturalities, and evolving interaction contexts.
+  Inspired by human social perception that alternates between interpersonal distance in boundary-sensitive situations and relative speed consistency in dynamic interactions, we propose <em>Socialality</em>, a human-inspired trajectory prediction framework with interpretable <em>socialality</em> anchors and an extended grouping window for stable, context-aware grouping inference.
+  Concretely, <em>Socialality</em> introduces a duo-scalar-controlled grouping kernel <em>Socialality</em> that jointly leverages historical observations and short-term future trajectory previews to learn agent-specific grouping rules, and employs a group-wise perception mechanism to model in-group and out-of-group interactions in an intuitive and explainable manner.
+  Furthermore, we conduct extensive experiments on standard benchmarks to demonstrate the performance gains of <em>Socialality</em>, and provide qualitative analyses and statistical studies of anchor distributions to verify the interpretability and stability of the proposed <em>socialality</em> anchors.
+</p>
+
+<LiquidGlassImageContainer
+  src="/assets/figs/intro.png"
+  alt="Motivation Illustration"
+  maxHeight="250px"
+>
+  Fig. Motivation Illustration: By observing the agent-wise preferences when grouping with others over a period of time, we mainly focus on how to infer each target agent's social boundary, which will anchor its group affiliation.
+</LiquidGlassImageContainer>
+
+## Contributions
+
+In summary, our main contributions are as follows:
+
+- We propose a *socialality*-anchors-controlled grouping kernel that simultaneously considers both agents' historical observations and their short-term future trajectory previews to learn to interpret agent-specific, context-adaptive social boundaries with temporal coherence, thus obtaining the group priors. 
+- We propose the *Socialality* trajectory prediction model that inherits the perception mechanism to explicitly takes the group priors interpreted from *socialality* kernel into account to simulate group-wise social interactions modulated by the newly proposed *socialality* anchors in a human-inspired way.
+- We conduct experiments on standard benchmarks to demonstrate the performance gain of *Socialality*, and further provide qualitative analyses together with statistical studies of anchor distributions to verify the interpretability and stability of the proposed *socialality* anchors.
+
+<h2>Citation</h2>
+<p>If you find this work useful, it would be grateful to cite our paper!</p>
+
+```bib
+@article{zou2026socialality,
+  title={Socialality Anchors: Towards Group-bounded Trajectory Prediction},
+  author={Zou, Ziqian and Wong, Conghao and Peng, Qinmu and You, Xinge},
+  journal={arXiv preprint arXiv:2609.36852},
+  year={2026}
+}
+```
+
+<h2>Contact us</h2>
+<p>
+  Ziqian Zou (<a href="https://github.com/LivepoolQ">@LivepoolQ</a>) <br />
+  Conghao Wong (<a href="https://github.com/cocoon2wong">@cocoon2wong</a>)
+</p>

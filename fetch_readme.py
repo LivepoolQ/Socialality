@@ -2,11 +2,12 @@
 @Author: Conghao Wong
 @Date: 2024-12-04 09:44:45
 @LastEditors: Ziqian Zou
-@LastEditTime: 2026-09-21 17:56:56
+@LastEditTime: 2026-09-30 10:32:22
 @Github: https://cocoon2wong.github.io
-@Copyright 2024 Conghao Wong, All Rights Reserved.
+@Copyright 2026 Conghao Wong, All Rights Reserved.
 """
 
+import re
 import requests
 import shutil
 
@@ -14,8 +15,8 @@ GITHUB_USERNAME = 'LivepoolQ'
 GITHUB_REPONAME = 'Socialality'
 GITHUB_READMEFILE = 'README.md'
 
-SOURCE_FILE = './guidelines.md'
-TARGET_FILE = './README.md.downloaded'
+SOURCE_FILE = '__pages/guidelines.md'
+TARGET_FILE = '__pages/README.md.downloaded'
 
 START_LINE = '## Getting Started'
 
@@ -42,3 +43,19 @@ if __name__ == '__main__':
     # Write new file
     with open(SOURCE_FILE, 'a+') as f:
         f.writelines(new_lines[i:])
+
+    # Anti-crawler: replace email @xxx.com with [at-mark}xxx.com
+    with open(SOURCE_FILE, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    content = re.sub(
+        r'(?<=[a-zA-Z0-9_.+-])@([a-zA-Z0-9.-]+\.com)\b',
+        r'[at-mark}\1',
+        content,
+    )
+
+    # Replace image links: figs/xxx -> /assets/figs/xxx
+    content = re.sub(r'(?<=[("\'])figs/', '/Rev/assets/figs/', content)
+
+    with open(SOURCE_FILE, 'w', encoding='utf-8') as f:
+        f.write(content)
