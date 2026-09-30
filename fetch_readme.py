@@ -2,7 +2,7 @@
 @Author: Conghao Wong
 @Date: 2024-12-04 09:44:45
 @LastEditors: Ziqian Zou
-@LastEditTime: 2026-09-30 10:32:22
+@LastEditTime: 2026-09-30 12:48:55
 @Github: https://cocoon2wong.github.io
 @Copyright 2026 Conghao Wong, All Rights Reserved.
 """
@@ -55,7 +55,7 @@ if __name__ == '__main__':
     )
 
     # Replace image links: figs/xxx -> /assets/figs/xxx
-    content = re.sub(r'(?<=[("\'])figs/', '/Rev/assets/figs/', content)
+    content = re.sub(r'(?<=[("\'])figs/', '/Socialality/assets/figs/', content)
 
     with open(SOURCE_FILE, 'w', encoding='utf-8') as f:
         f.write(content)
