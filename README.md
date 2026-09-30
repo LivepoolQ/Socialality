@@ -2,7 +2,7 @@
  * @Author: Ziqian Zou
  * @Date: 2026-03-02 20:02:50
  * @LastEditors: Ziqian Zou
- * @LastEditTime: 2026-06-02 10:48:08
+ * @LastEditTime: 2026-09-30 13:43:38
  * @Description: file content
  * @Github: https://github.com/LivepoolQ
  * Copyright 2026 Ziqian Zou, All Rights Reserved.
@@ -10,7 +10,7 @@
 # Socialality
 
 This is the official code repo of our paper "Socialality Anchors: Towards Group-bounded Trajectory Prediction".
-
+The full paper is now available at [https://arxiv.org/abs/2609.36852](https://arxiv.org/abs/2609.36852).
 Socialality is an extended journal-version of our previous work [GrouPConCeption](https://github.com/LivepoolQ/GrouPConCeption).
 
 ## Getting Started
@@ -42,11 +42,184 @@ Run the following command to install the required packages in your Python enviro
 pip install -r requirements.txt
 ```
 
+## Preparing Datasets
+
+### ETH-UCY, SDD, NBA
+
+You can run the following commands to prepare dataset files that have been validated in our paper:
+
+1. Run Python the script inner the `dataset_original` folder:
+
+    ```bash
+    cd dataset_original
+    ```
+
+    - For `ETH-UCY` and `SDD`, run
+
+        ```bash
+        python main_ethucysdd.py
+        ```
+
+    - For `NBA`, please download their dataset files, put them into the given path listed within `dataset_original/main_nba.py`, then run
+
+        ```bash
+        python main_nba.py
+        ```
+
+2. Back to the repo folder and create soft links:
+
+    ```bash
+    cd ..
+    ln -s dataset_original/dataset_processed ./
+    ln -s dataset_original/dataset_configs ./
+    ```
+
 > [!NOTE]
-> More details will be gradually uploaded soon.
-> Thank you for your support to our work.
+> You can also download our processed dataset files manually from [here](https://github.com/cocoon2wong/Project-Luna/releases), and put them into `dataset_processed` and `dataset_configs` folders manually to reproduce our results.
 
+Click the following buttons to learn how we process these dataset files and the detailed dataset settings.
 
+<div style="text-align: center;">
+    <a class="btn btn-colorful btn-lg" href="https://cocoon2wong.github.io/Project-Luna/howToUse/">💡 Dataset Guidelines</a>
+    <a class="btn btn-colorful btn-lg" href="https://cocoon2wong.github.io/Project-Luna/notes/">💡 Datasets and Splits Information</a>
+</div>
+
+### Training on Your New Datasets
+
+Before training `Socialality` models on your own dataset, you should add your dataset information.
+See [this page](https://cocoon2wong.github.io/Project-Luna/) for more details.
+
+## Model Weights
+
+We have provided our pre-trained model weights to help you quickly evaluate `Socialality` models' performance.
+
+Click the following buttons to download our model weights.
+We recommend that you download the weights and place them in the `weights` folder.
+
+<div style="text-align: center;">
+    <a class="btn btn-colorful btn-lg" href="https://github.com/LivepoolQ/Socialality/releases/tag/v1.0.0">⬇️ Download Weights</a>
+</div>
+
+You can start evaluating these weights by
+
+```bash
+python main.py --load SOME_MODEL_WEIGHTS
+```
+
+Here, `SOME_MODEL_WEIGHTS` is the path of the weights folder, for example, `./ablations/ablations_disable_anchor_dis0_speed1_saeth`.
+
+## Training
+
+You can start training a `Socialality` model via the following command:
+
+```bash
+python main.py --model sa --split DATASET_SPLIT
+```
+
+Here, `DATASET_SPLIT` is the identifier (i.e., the name of dataset's split files in `dataset_configs`, for example `eth` is the identifier of the split list in `dataset_configs/ETH-UCY/eth.plist`) of the dataset or splits used for training.
+It accepts:
+
+- ETH-UCY: {`eth`, `hotel`, `univ13`, `zara1`, `zara2`};
+- SDD: `sdd`;
+- NBA: `nba50k`.
+
+For example, you can start training the `Socialality` model on the `zara1` split by
+
+```bash
+python main.py --model sa --split zara1
+```
+
+Also, other args may need to be specified, like the learning rate `--lr`, batch size `--batch_size`, etc.
+See detailed args in the `Args Used` Section.
+
+## Reproducing Our Results
+
+The simplest way to reproduce our results is to copy all training args we used in the provided weights.
+For example, you can start a training of `Socialality` on `zara1` using the same args as we did by:
+
+```bash
+python main.py --model sa --restore_args ${PATH_TO_YOUR_DOWNLOADED_WEIGHTS}/baseline_sazara1
+```
+
+Here, `${PATH_TO_YOUR_DOWNLOADED_WEIGHTS}` is your path to save our pretrained weights.
+
+You can open a `Tensorboard` to see how losses and metrics change during training, by:
+
+```bash
+tensorboard --logdir ./logs
+```
+
+## Visualization & Playground
+
+We have build a simple user interface to validate the qualitative trajectory prediction performance of our proposed `Socialality` models.
+You can use it to visualize model predictions and learn how the proposed `Socialality` works to handle social interactions in an interactive way by adding any manual neighbors at any positions in the scene.
+
+> [!WARNING]
+> Visualizations may need dataset videos. For copyright reasons and size limitations, we do not provide them in our repo. Instead, a static image will be displayed if you have no videos put into the corresponding path.
+
+### Visualization Requirements
+
+This playground interface is implemented with `PyQt6`.
+Install this package in your python environment to start:
+
+```bash
+pip install pyqt6
+```
+
+### Open a Playground
+
+Run the following command to open a playground:
+
+```bash
+python playground/main.py
+```
+
+![Playground](figs/playground.png)
+
+### Load Models and Datasets
+
+You can load a supported `Socialality` model or one of its variations by clicking the `Load Model` button.
+By clicking the `Run` button, you can see how the loaded model performs on the given sample.
+You can also load different datasets (video clips) by clicking the `More Settings ...` button.
+
+### Add Manual Neighbors
+
+You can also directly click the visualized figure to add a new neighbor to the scene.
+Through this neighbor that wasn't supposed to exist in the prediction scene, you can verify how models handle *social interactions* qualitatively.
+
+### Visualize Group Members
+
+You can add the arg `--vis_group_members` to visualize the in-group members of any ego agent.
+For example, you can use the following command to open a playground with our pretrained `zara1` weights loaded (supposed to be located at `./weights/vis_baseline_sazara1`), and visualize group members by clicking the `Run` button:
+
+```bash
+python playground/main.py --load ./weights/vis_baseline_sazara1 --vis_group_members
+```
+
+![GroupMembers](figs/group_member.png)
+
+### Visualize Grouping Window
+
+You can add the arg `--vis_grouping_window` to visualize the grouping window of the ego agent.
+
+> [!NOTE]
+> This arg only works when the arg `vis_group_members` is activated. 
+
+```bash
+python playground/main.py --load ./weights/vis_baseline_sazara1 --vis_group_members --vis_grouping_window
+```
+
+![GroupingWindow](figs/grouping_window.png)
+
+### Visualize Socialality Anchors
+
+You can add the arg `--vis_anchors` to visualize the anchor distributions of agents with given batchsize.
+
+```bash
+python main.py --load ./weights/vis_baseline_sazara1 --vis_anchors
+```
+
+![Anchors](figs/anchors.png)
 
 ## Contact us
 
